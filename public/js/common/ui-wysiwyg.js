@@ -1,37 +1,41 @@
 jQuery(function($) {
 
-	if (!window.tinymce)
-		return;
+  if (!window.tinymce)
+    return;
 
-	var plugins = [ 'code', 'link' ],
-		toolbar = 'bold italic | alignleft aligncenter alignright | bullist numlist | outdent indent | link';
+  var options = {
+    selector: 'textarea.wysiwyg',
+    menubar: false,
+    plugins: ['code', 'link'],
+    toolbar: 'bold italic | alignleft aligncenter alignright | bullist numlist | outdent indent | link',
+    skin: 'keystone',
+    uploadimage_form_url: '/keystone/api/cloudinary/upload'
+  };
 
-	if (Keystone.wysiwyg.options.enableImages) {
-		plugins.push('image');
-		toolbar += ' | image';
-	}
+  if (Keystone.wysiwyg.options.enableImages) {
+    options.plugins.push('image');
+    options.toolbar += ' | image';
+  }
 
-	if (Keystone.wysiwyg.options.enableCloudinaryUploads) {
-		plugins.push('uploadimage');
-		toolbar += (Keystone.wysiwyg.options.enableImages) ? ' uploadimage' : ' | uploadimage';
-	}
+  if (Keystone.wysiwyg.options.paste_as_text) {
+    options.plugins.push('paste');
+    options.paste_as_text = true;
+  }
 
-	if (Keystone.wysiwyg.options.additionalButtons) {
-	    var additionalButtons = Keystone.wysiwyg.options.additionalButtons.split(',');
-	    for (var i=0; i<additionalButtons.length; i++) {
-	        toolbar += (' | ' + additionalButtons[i]);
-	    }
-	}
+  if (Keystone.wysiwyg.options.enableCloudinaryUploads) {
+    options.plugins.push('uploadimage');
+    options.toolbar += (Keystone.wysiwyg.options.enableImages) ? ' uploadimage' : ' | uploadimage';
+  }
 
-	toolbar += ' | code';
+  if (Keystone.wysiwyg.options.additionalButtons) {
+      var additionalButtons = Keystone.wysiwyg.options.additionalButtons.split(',');
+      for (var i=0; i<additionalButtons.length; i++) {
+        options.toolbar += (' | ' + additionalButtons[i]);
+      }
+  }
 
-	tinymce.init({
-		selector: 'textarea.wysiwyg',
-		menubar: false,
-		plugins: plugins,
-		toolbar: toolbar,
-		skin: 'keystone',
-		uploadimage_form_url: '/keystone/api/cloudinary/upload'
-	});
+  options.toolbar += ' | code';
+
+  tinymce.init(options);
 
 });
