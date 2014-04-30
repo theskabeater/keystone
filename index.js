@@ -1170,7 +1170,8 @@ Keystone.prototype.render = function(req, res, view, ext) {
 		wysiwygOptions: {
 			enableImages: keystone.get('wysiwyg images') ? true : false,
 			enableCloudinaryUploads: keystone.get('wysiwyg cloudinary images') ? true : false,
-			additionalButtons: keystone.get('wysiwyg additional buttons') || ''
+			additionalButtons: keystone.get('wysiwyg additional buttons') || '',
+      paste_as_text: keystone.get('wysiwyg paste_as_text') ? true : false
 		}
 	};
 
